@@ -13,7 +13,7 @@ public:
         long long sum_m = accumulate(rolls.begin(), rolls.end(), 0);
         long long sum_n = sum_all - sum_m;
 
-        
+         if(sum_n>6*n || sum_n<n) return {};
        
 
         // n=5 sum=11  {2,2,2,3,2}
