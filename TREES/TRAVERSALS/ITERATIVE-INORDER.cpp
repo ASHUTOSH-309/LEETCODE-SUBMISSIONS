@@ -18,11 +18,10 @@ vector<int> Inorder(TreeNode *root)
     // For Iterative Inorder Stack is required
     stack<TreeNode *> st;
 
-    st.push(root);
 
     TreeNode *curr = root;
 
-    while (!st.empty())
+    while (true)
     {
 
         if (curr != NULL)
@@ -32,6 +31,7 @@ vector<int> Inorder(TreeNode *root)
         }
         else
         {
+            if(st.empty()==true) break;
             curr = st.top();
             st.pop();
             ans.push_back(curr->val);
@@ -50,6 +50,7 @@ int main()
     root->left = new TreeNode(2);
     root->right = new TreeNode(3);
 
+cout<<Inorder(root).size()<<endl;
     for (auto it : Inorder(root))
     {
         cout << it << "\t";
