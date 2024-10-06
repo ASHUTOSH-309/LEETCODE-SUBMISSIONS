@@ -11,7 +11,7 @@
 1. Check if the trailing and the leading characters are matching, if it is so, then 
 2. Check whether the smaller string is a substring of the larger one 
 
-Got me a Tle haha 130 on 138
+Got me a Wrong answer haha 130 on 138
 
 
 Failed on 
