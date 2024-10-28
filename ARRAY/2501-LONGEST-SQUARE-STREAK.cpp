@@ -40,3 +40,22 @@ public:
         return globalCounter;
     }
 };
+
+/* while (nextNumber <= maxi) {
+    if (mpp[nextNumber]) {
+        counter++;
+        mpp[nextNumber]--;
+        nextNumber = nextNumber * nextNumber;
+    } else {
+        break;
+    }
+}
+
+The while loop squares nextNumber repeatedly, which causes it to grow exponentially. 
+Therefore, the number of times nextNumber can be squared before it exceeds maxi is log log(maxi),
+as the value grows as powers of 2.
+
+For each i, the inner while loop thus runs in O(log log(maxi)) time.
+
+ */
+
