@@ -1,26 +1,25 @@
 #include<bits/stdc++.h>
 
 using namespace std;
-
 class Solution {
 public:
     string makeFancyString(string s) {
-
-        string ans;
-
-        if(s.size()<3) return s;
-
-        for(int i=0;i<=s.size()-3 && s.size()>=3;i++){
-
-            if(s[i]==s[i+1] && s[i]==s[i+2]){
-                    s.erase(i,1);
-            i--;
+        string ans = "";
+        ans.push_back(s[0]);
+        int n = s.size(),cnt = 1;
+        for(int i=1;i<n;i++){
+            if(s[i] == ans.back()){
+                cnt++;
+                // ignore all continuous occurances of an element greater than or equal to 3, by the help of counter 
+                // variable which will state the count of element residing at array back;
+                // even a stack can also be used to perform the same
+                if(cnt < 3)ans.push_back(s[i]);
             }
-
+            else{
+                cnt = 1;
+                ans.push_back(s[i]);
+            }
         }
-
-        ans=s;
         return ans;
-        
     }
 };
