@@ -1,27 +1,36 @@
 #include<bits/stdc++.h>
 
 using namespace std;
-
 class Solution {
 public:
     long long maximumSubarraySum(vector<int>& nums, int k) {
-
-
-            long long global_max=0;
-            for(int i=0;i<=nums.size()-k;i++){
-                    long long sum=0;
-                    bool AreDistinct=true;
-                    for(int j=i;j<i+k;j++){
-                            sum+=nums[j];
-                            if( (j<i+k-1) && (nums[j]==nums[j+1]) ){
-                                    AreDistinct=false;
-                                    break;
-                            }
-                    }
-
-                    if(AreDistinct) global_max=max(global_max,sum);
+        int n = nums.size();
+        unordered_set<int> elements;
+        long long current_sum = 0;
+        long long max_sum = 0;
+        int begin = 0;
+        
+        for (int end = 0; end < n; end++) {
+            if (elements.find(nums[end]) == elements.end()) {
+                current_sum += nums[end];
+                elements.insert(nums[end]);
+                
+                if (end - begin + 1 == k) {
+                    max_sum = max(max_sum, current_sum);
+                    current_sum -= nums[begin];
+                    elements.erase(nums[begin]);
+                    begin++;
+                }
+            } else {
+                while (nums[begin] != nums[end]) {
+                    current_sum -= nums[begin];
+                    elements.erase(nums[begin]);
+                    begin++;
+                }
+                begin++;
             }
-
-            return global_max;
+        }
+        
+        return max_sum;
     }
 };
