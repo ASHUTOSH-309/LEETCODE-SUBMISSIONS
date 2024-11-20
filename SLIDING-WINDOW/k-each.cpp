@@ -36,6 +36,7 @@ public:
 
             }
             int n=s.size();
+            if(FreqBack['a']>=k && FreqBack['b']>=k && FreqBack['c']>=k) ans=min(ans,n-j-1);
             ans=min(ans, n-j+i);
         }
 
