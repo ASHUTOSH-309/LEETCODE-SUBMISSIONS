@@ -1,90 +1,50 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
- * };
- */
-
-
-struct TreeNode{
-int val;
-TreeNode* left;
-TreeNode* right;
-
-TreeNode(int x): val(val){}
-}
-
 #include<bits/stdc++.h>
 
 using namespace std;
 
 
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+};
+
 class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
+        // Use a queue to hold pairs of node and its index
+        queue<pair<TreeNode*, long long>> q;
+        q.push({root, 0});  // Start with index 0 for the root
 
-        queue<TreeNode*> q;
-        q.push(root);
+        int global_maxima = 1;
 
-        int global_maxima=1;
-        
         while (!q.empty()) {
             int size = q.size();
-            bool leftMostFound = false;
+            long long leftmost = 0, rightmost = 0;
 
-            int leftmost = 0;
-            int rightmost = 0;
-            int counter = 0;
-            int breakbfs=true;
             for (int i = 0; i < size; i++) {
-
-                TreeNode* node = q.front();
+                auto it = q.front();
                 q.pop();
+                TreeNode* node = it.first;
+                long long number = it.second;
 
-                counter++;
-                if(node->val != -101) breakbfs=false;
-                if (node->left != NULL) {
-                    if (!leftMostFound) {
-                        leftmost = counter;
-                        leftMostFound = true;
-                    }
-                    rightmost=counter;
-                    q.push(node->left);
-                }
-                else{
-                    TreeNode* temp=new TreeNode(-101);
-                    q.push(temp);
+                // Normalize the indices relative to the first node at each level
+                if (i == 0) leftmost = number;  // First node at the current level
+                if (i == size - 1) rightmost = number;  // Last node at the current level
+
+                // Push left child with normalized index
+                if (node->left != nullptr) {
+                    q.push({node->left, 2 * (number - leftmost)});
                 }
 
-                counter++;
-
-                if(node->val != -101) breakbfs=false;
-                if (node->right != NULL) {
-
-                    if (!leftMostFound) {
-                        leftmost = counter;
-                        leftMostFound = true;
-                    }
-                    q.push(node->right);
-                    rightmost = counter;
+                // Push right child with normalized index
+                if (node->right != nullptr) {
+                    q.push({node->right, 2 * (number - leftmost) + 1});
                 }
-                else{
-                    TreeNode* temp=new TreeNode(-101);
-                    q.push(temp);
-                }
-
-
             }
 
-            if(breakbfs) break;
-            global_maxima=max(global_maxima,rightmost-leftmost+1);
-
+            // Update the global maximum width of the binary tree
+            global_maxima = max(global_maxima, (int)(rightmost - leftmost + 1));
         }
 
         return global_maxima;
