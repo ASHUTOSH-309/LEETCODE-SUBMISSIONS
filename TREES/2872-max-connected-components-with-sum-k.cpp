@@ -3,7 +3,7 @@ using namespace std;
 
 class Solution {
 public:
-    long long dfs(int node, vector<vector<int>> adj, vector<int>& vals, int k,
+    long long dfs(int node, vector<vector<int>>& adj, vector<int>& vals, int k,
                   int& counter, int parent) {
 
         long long sum = vals[node];
