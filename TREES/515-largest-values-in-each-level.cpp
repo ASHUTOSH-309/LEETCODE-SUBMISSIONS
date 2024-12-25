@@ -24,7 +24,7 @@ struct TreeNode{
 };
 class Solution {
 public:
-    int findHeight(TreeNode* root){
+ /*    int findHeight(TreeNode* root){
             if(root==NULL) return 0;
 
 
@@ -33,7 +33,7 @@ public:
 
             return 1+max(left,right);
 
-    }
+    } */
 
 
     vector<int> largestValues(TreeNode* root) {
@@ -44,10 +44,10 @@ public:
         queue<TreeNode*> q;
         q.push(root);
         largestValues.push_back(root->val);
-        int heightofTree=findHeight(root);
+       // int heightofTree=findHeight(root);
 
 
-        int level=0;
+        //int level=0;
 
         while (!q.empty()) {
 
@@ -69,14 +69,15 @@ public:
                     maxi = max(maxi, node->right->val);
                 }
             }
-                if(level!=heightofTree-1)
+               // if(level!=heightofTree-1)
                    largestValues.push_back(maxi);
                 
 
 
-           level++;     
+          // level++;     
         }
 
+        largestValues.pop_back();
         return largestValues;
     }
 };
