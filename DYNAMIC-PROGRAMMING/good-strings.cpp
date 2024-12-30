@@ -1,33 +1,30 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-
 class Solution {
 public:
-    void CountPossibleStrings(int CurrentSize,int& count,int Reqsize,int Zero, int One){
 
-        if(CurrentSize>Reqsize) return;
+    const int m=1e9+7;
+    int CountPossibleStrings(int CurrentSize,int Zero, int One,int high, int low,vector<int>& dp){
 
-        if(CurrentSize==Reqsize){
-            count++;
-            return;
+        if(CurrentSize>high) return 0;
+        if(dp[CurrentSize] != -1) return dp[CurrentSize];
+        bool includeCurrent=false;
+
+        if(CurrentSize>=low && CurrentSize<=high){
+            includeCurrent=true;     
         }
 
-        CountPossibleStrings(CurrentSize+Zero,count,Reqsize,Zero,One);
-        CountPossibleStrings(CurrentSize+One,count,Reqsize,Zero,One);
+        int ZeroCount= CountPossibleStrings(CurrentSize+Zero,Zero,One,high,low,dp);
+        int OneCount=  CountPossibleStrings(CurrentSize+One,Zero,One,high, low,dp);
+
+
+        return dp[CurrentSize]=(includeCurrent+ZeroCount+OneCount)%m;
     }
 
 
     int countGoodStrings(int low, int high, int zero, int one) {
-        int count=0;
-
-        int sum=0;
-
-        for(int i=low;i<=high;i++){
-            CountPossibleStrings(0,count,i,zero,one);
-            sum+=count;
-            count=0;
-        }
-        return sum;        
+    
+        vector<int> dp(high+1,-1);
+        return  CountPossibleStrings(0,zero,one,high,low,dp);       
     }
 };
